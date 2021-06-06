@@ -80,11 +80,8 @@ def main():
         delta_t = pose_gt[i+1, 0]-pose_gt[i, 0]
 
         temp = (start.inv()*end).as_rotvec()
-        vec_angle = LA.norm(temp)
-        vec_axis = (temp / vec_angle).reshape(3, 1)
-
-        o = start.as_matrix().dot(vec_axis)
-        twist_rot = o*(vec_angle/delta_t)
+        o = start.as_matrix().dot(temp)  # turn the rotation axis into world frame
+        twist_rot = o/delta_t
 
         vel_gt_pose[i, 1:4] = twist_rot.T
         vel_gt_pose[i, 0] = pose_gt[i, 0]
