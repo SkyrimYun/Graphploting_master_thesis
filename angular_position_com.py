@@ -9,19 +9,22 @@ def main():
 
     # load files
     try:
-        pose_gt = np.loadtxt('data_gt/test_panorama/pose_gt.txt')
+        pose_gt = np.loadtxt(
+            'data_gt/test_panorama/test_panorama2/pose_gt.txt')
         pose_gt_t = pose_gt[:, 0]
         pose_gt_x = pose_gt[:, 1]
         pose_gt_y = pose_gt[:, 2]
         pose_gt_z = pose_gt[:, 3]
 
-        pose_pano = np.loadtxt('data_panotracking/esim/estimated_pose.txt')
+        pose_pano = np.loadtxt(
+            'data_panotracking/esim/test_panorama2/estimated_pose.txt')
         pose_pano_t = pose_pano[:, 0]
         pose_pano_x = pose_pano[:, 1]
         pose_pano_y = pose_pano[:, 2]
         pose_pano_z = pose_pano[:, 3]
 
-        pose_glo = np.loadtxt('data_globally/test_panorama/position.txt')
+        pose_glo = np.loadtxt(
+            'data_globally/test_panorama/test_panorama2/position.txt')
         pose_glo_t = pose_glo[:, 0]
         pose_glo_x = pose_glo[:, 1]
         pose_glo_y = pose_glo[:, 2]
