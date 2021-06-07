@@ -38,27 +38,49 @@ def main():
 
     # calculate error
     rmse_pano = 0.0
+    geodes_pano = np.zeros((pose_pano.shape[0], 1))
     for i in range(pose_pano.shape[0]):
-        r_est = sp.SO3(R.from_rotvec(pose_pano[i, 1:4]).as_matrix())
-        est_t = pose_pano[i, 0]
         # find cloest ground truth pose index
+        est_t = pose_pano[i, 0]
         index_gt = np.argmin(np.abs(est_t-pose_gt[:, 0]))
-        r_gt = sp.SO3(R.from_rotvec(pose_gt[index_gt, 1:4]).as_matrix())
-        error = LA.norm((r_gt.inverse()*r_est).log())
+        r_est = R.from_rotvec(pose_pano[i, 1:4]).as_matrix()
+        r_gt = R.from_rotvec(pose_gt[index_gt, 1:4]).as_matrix()
+
+        # RMSE
+        so3_est = sp.SO3(r_est)
+        so3_gt = sp.SO3(r_gt)
+        error = LA.norm((so3_gt.inverse()*so3_est).log())
         rmse_pano += (error*error)
+
+        # Geodesic distance
+        tra = np.trace(r_est.dot(r_gt.T))
+        theta = np.arccos((tra-1)/2)
+        geodes_pano[i, 0] = theta
+
     rmse_pano /= pose_pano.shape[0]
     rmse_pano = sqrt(rmse_pano)
     print(rmse_pano)
 
     rmse_glo = 0.0
+    geodes_glo = np.zeros((pose_glo.shape[0], 1))
     for i in range(pose_glo.shape[0]):
-        r_est = sp.SO3(R.from_rotvec(pose_glo[i, 1:4]).as_matrix())
-        est_t = pose_glo[i, 0]
         # find cloest ground truth pose index
+        est_t = pose_glo[i, 0]
         index_gt = np.argmin(np.abs(est_t-pose_gt[:, 0]))
-        r_gt = sp.SO3(R.from_rotvec(pose_gt[index_gt, 1:4]).as_matrix())
-        error = LA.norm((r_gt.inverse()*r_est).log())
+        r_est = R.from_rotvec(pose_glo[i, 1:4]).as_matrix()
+        r_gt = R.from_rotvec(pose_gt[index_gt, 1:4]).as_matrix()
+
+        # RMSE
+        so3_est = sp.SO3(r_est)
+        so3_gt = sp.SO3(r_gt)
+        error = LA.norm((so3_gt.inverse()*so3_est).log())
         rmse_glo += (error*error)
+
+        # Geodesic distance
+        tra = np.trace(r_est.dot(r_gt.T))
+        theta = np.arccos((tra-1)/2)
+        geodes_glo[i, 0] = theta
+
     rmse_glo /= pose_glo.shape[0]
     rmse_glo = sqrt(rmse_glo)
     print(rmse_glo)
@@ -88,6 +110,24 @@ def main():
     ax_aligned.set_ylabel('rotation/rad')
     ax_aligned.set_title('Globally_Aligned_Events rotation comparison')
     ax_aligned.legend()
+
+    # Geodesic distance between estimated rotation from globally-aligned to GT
+    fig_geo_aligned, ax_geo_aligned = plt.subplots()
+    ax_geo_aligned.plot(pose_glo_t, geodes_glo, 'b-')
+    ax_geo_aligned.set_xlabel('time [s]')
+    ax_geo_aligned.set_ylabel('Orientation error [rad]')
+    ax_geo_aligned.set_title(
+        'Geodesic distance between estimated rotation from Globally_Aligned_Events to GT')
+    ax_geo_aligned.legend()
+
+    # Geodesic distance between estimated rotation from panotracking to GT
+    fig_geo_pano, ax_geo_pano = plt.subplots()
+    ax_geo_pano.plot(pose_pano_t, geodes_pano, 'b-')
+    ax_geo_pano.set_xlabel('time [s]')
+    ax_geo_pano.set_ylabel('Orientation error [rad]')
+    ax_geo_pano.set_title(
+        'Geodesic distance between estimated rotation from Panotracking to GT')
+    ax_geo_pano.legend()
 
     plt.show()
 
