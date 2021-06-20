@@ -17,10 +17,6 @@ def main():
     try:
         vel_imu = np.loadtxt(
             'data_gt/test_panorama/test_panorama3/imu_angular.txt')
-        vel_imu_t = vel_imu[:, 0]
-        vel_imu_x = vel_imu[:, 1]
-        vel_imu_y = vel_imu[:, 2]
-        vel_imu_z = vel_imu[:, 3]
 
         pose_gt = np.loadtxt(
             'data_gt/test_panorama/test_panorama3/pose_gt.txt')
@@ -70,11 +66,11 @@ def main():
     ax_imu.plot(pose_gt_t, pose_gt_x, 'b--', label='x_gt')
     ax_imu.plot(pose_gt_t, pose_gt_y, 'y--', label='y_gt')
     ax_imu.plot(pose_gt_t, pose_gt_z, 'g--', label='z_gt')
-    ax_imu.plot(pose_pano_t, pose_pano_x, 'b-.', label='x_pano')
-    ax_imu.plot(pose_pano_t, pose_pano_y, 'y-.', label='y_pano')
-    ax_imu.plot(pose_pano_t, pose_pano_z, 'g-.', label='z_pano')
-    ax_imu.set_xlabel('time/s')
-    ax_imu.set_ylabel('rotation/rad')
+    # ax_imu.plot(pose_pano_t, pose_pano_x, 'b-.', label='x_pano')
+    # ax_imu.plot(pose_pano_t, pose_pano_y, 'y-.', label='y_pano')
+    # ax_imu.plot(pose_pano_t, pose_pano_z, 'g-.', label='z_pano')
+    ax_imu.set_xlabel('time [s]')
+    ax_imu.set_ylabel('rotation [rad]')
     ax_imu.set_title('IMU Dead Reckoning rotation comparison')
     ax_imu.legend()
 
