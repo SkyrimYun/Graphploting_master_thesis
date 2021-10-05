@@ -10,7 +10,7 @@ def main():
     # load files
     try:
         pose = np.loadtxt(
-            '/home/yunfan/work_spaces/master_thesis/datasets/shapes_rotation/shapes_rotation/groundtruth.txt')
+            '/home/yunfan/work_spaces/master_thesis/datasets/ESIM_panorama/groundtruth.txt')
        
 
     except FileNotFoundError:
@@ -31,12 +31,12 @@ def main():
         
         r_quat = R.from_matrix(rot).as_quat()
         pose[i, 4] = r_quat[0]
-        pose[i, 5] = r_quat[1]
-        pose[i, 6] = r_quat[2]
+        pose[i, 5] = -r_quat[2]
+        pose[i, 6] = r_quat[1]
         pose[i, 7] = r_quat[3]
 
     np.savetxt(
-        '/home/yunfan/work_spaces/master_thesis/datasets/shapes_rotation/shapes_rotation/groundtruth_zero.txt', pose, fmt='%.10f')
+        '/home/yunfan/work_spaces/master_thesis/datasets/ESIM_panorama/groundtruth_zero.txt', pose, fmt='%.10f')
 
 
 if __name__ == '__main__':

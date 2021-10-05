@@ -9,7 +9,7 @@ def main():
     # load files
     try:
         vel_imu = np.loadtxt(
-            '/home/yunfan/work_spaces/master_thesis/datasets/2021-06-04-11-21-58/imu_angular.txt')
+            '/home/yunfan/work_spaces/master_thesis/datasets/2021-06-04-12-14-27/imu_angular.txt')
         vel_imu_t = vel_imu[:, 0]
         vel_imu_x = vel_imu[:, 1]
         vel_imu_y = vel_imu[:, 2]
@@ -23,7 +23,7 @@ def main():
         vel_gt_z = vel_gt[:, 3]
 
         vel_glo = np.loadtxt(
-            '/home/yunfan/work_spaces/master_thesis/Globally_Aligned_Events/src/rotation_estimator/data/real_world/2021-06-04-11-21-58/velocity.txt')
+            '/home/yunfan/work_spaces/master_thesis/Globally_Aligned_Events/src/rotation_estimator/data/real_world/2021-06-04-12-14-27/velocity.txt')
         vel_glo_t = vel_glo[:, 0]
         vel_glo_x = -vel_glo[:, 1]
         vel_glo_y = -vel_glo[:, 2]
@@ -96,9 +96,9 @@ def main():
     ax_aligned.plot(vel_glo_t, vel_glo_x, 'b-', label='x_glo')
     ax_aligned.plot(vel_glo_t, vel_glo_y, 'y-', label='y_glo')
     ax_aligned.plot(vel_glo_t, vel_glo_z, 'g-', label='z_glo')
-    ax_aligned.plot(vel_imu_t, vel_imu_x, 'b--', label='x_gt')
-    ax_aligned.plot(vel_imu_t, vel_imu_y, 'y--', label='y_gt')
-    ax_aligned.plot(vel_imu_t, vel_imu_z, 'g--', label='z_gt')
+    ax_aligned.plot(vel_imu_t, vel_imu_x, 'b--', label='x_imu')
+    ax_aligned.plot(vel_imu_t, vel_imu_y, 'y--', label='y_imu')
+    ax_aligned.plot(vel_imu_t, vel_imu_z, 'g--', label='z_imu')
     ax_aligned.set_xlabel('time [s]')
     ax_aligned.set_ylabel('rotation velocity [rad/s]')
     ax_aligned.set_title(

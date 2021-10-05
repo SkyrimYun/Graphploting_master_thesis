@@ -5,8 +5,6 @@ from scipy.spatial.transform import Rotation as R
 from numpy import linalg as LA
 from matplotlib.ticker import MaxNLocator
 
-
-
 def skew(x):
     return np.array([[0, -x[2], x[1]],
                      [x[2], 0, -x[0]],
@@ -17,19 +15,13 @@ def main():
 
     # load files
     try:
-        vel_imu = np.loadtxt(
-            '/media/yunfan/Samsung_T5/datasets/Yunfan/batch2_with_power/cross_360_1/imu_angular.txt')
-
         glo = np.loadtxt(
-            '/home/yunfan/work_spaces/master_thesis/Globally_aligned_events_original/src/rotation_estimator/data/real_world/cross_360_1/position_rpg.txt')
+            '/home/yunfan/work_spaces/master_thesis/Globally_aligned_events_original/src/rotation_estimator/data/real_world/cross_360x2/position_rpg.txt')
         glo_t = glo[:, 0]
         glo_vec = R.from_quat(glo[:, 4:8]).as_rotvec()
 
-        # pano = np.loadtxt(
-        #     '/home/yunfan/work_spaces/master_thesis/dvs-panotracking/data/real_world/river_rot_1/output_pose/estimated_pose_rpg.txt')
-        # pano_t = pano[:, 0]
-        # pano_vec = R.from_quat(pano[:, 4:8]).as_rotvec()
-
+        vel_imu = np.loadtxt(
+            '/home/yunfan/work_spaces/master_thesis/datasets/cross_360x2/imu_angular.txt')
     except FileNotFoundError:
         print('Cannot open file!')
     except LookupError:
@@ -59,11 +51,8 @@ def main():
     dr_z = dr[:, 3]
 
     fig, (ax_x, ax_y, ax_z) = plt.subplots(3, figsize=[6, 12])
-   
 
     # x axis
-    # ax_x.plot(pano_t, pano_vec[:, 0], color='red',
-    #           linestyle='solid', lw=2.5, label='panoramic tracking')
     ax_x.plot(dr_t,   dr_x, color='green',
               linestyle='solid', lw=2.5, label='IMU Dead Reckoning')
     ax_x.plot(glo_t,  glo_vec[:, 0], color='blue',
@@ -76,7 +65,6 @@ def main():
     ax_x.set_ylabel('tilt [rad]', fontsize=25)
 
     # y axis
-    #ax_y.plot(pano_t, pano_vec[:, 1], color='red', linestyle='solid', lw=2.5)
     ax_y.plot(dr_t,   dr_y, color='green', linestyle='solid', lw=2.5)
     ax_y.plot(glo_t,  glo_vec[:, 1], color='blue', linestyle='solid', lw=2.5)
     ax_y.set_title('y-axis', fontsize=20)
@@ -87,7 +75,6 @@ def main():
     ax_y.set_ylabel('pan [rad]', fontsize=25)
 
     # z axis
-    #ax_z.plot(pano_t, pano_vec[:, 2], color='red', linestyle='solid', lw=2.5)
     ax_z.plot(dr_t,   dr_z, color='green', linestyle='solid', lw=2.5)
     ax_z.plot(glo_t,  glo_vec[:, 2], color='blue', linestyle='solid', lw=2.5)
     ax_z.set_title('z-axis', fontsize=20)
