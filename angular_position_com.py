@@ -10,7 +10,7 @@ def main():
     # load files
     try:
         pose_gt = np.loadtxt(
-            '/home/yunfan/work_spaces/master_thesis/rpg_trajectory_evaluation/results/cmp_tracking/desktop/globallyaligned/desktop_globallyaligned_fast_motion/stamped_groundtruth.txt')
+            '/home/yunfan/work_space/master_thesis/rpg_trajectory_evaluation/results/cmp_tracking/desktop/globallyaligned/desktop_globallyaligned_fast_motion/stamped_groundtruth.txt')
         pose_gt_t = pose_gt[:, 0]
         pose_gt_vec = R.from_quat(pose_gt[:, 4:8]).as_rotvec()
 
@@ -20,7 +20,7 @@ def main():
         pose_gt_w = pose_gt[:, 7]
 
         pose_pano = np.loadtxt(
-            '/home/yunfan/work_spaces/master_thesis/rpg_trajectory_evaluation/results/cmp_tracking/desktop/dvspanotracking/desktop_dvspanotracking_fast_motion/stamped_traj_estimate.txt')
+            '/home/yunfan/work_space/master_thesis/rpg_trajectory_evaluation/results/cmp_tracking/desktop/dvspanotracking/desktop_dvspanotracking_fast_motion/stamped_traj_estimate.txt')
         pose_pano_t = pose_pano[:, 0]
         pose_pano_vec = R.from_quat(pose_pano[:, 4:8]).as_rotvec()
 
@@ -30,7 +30,7 @@ def main():
         pose_pano_w = pose_pano[:, 7]
 
         pose_glo = np.loadtxt(
-            '/home/yunfan/work_spaces/master_thesis/dvs_smt/src/dvs_smt/data/fast_motion/position_rpg.txt')
+            '/home/yunfan/work_space/master_thesis/rpg_trajectory_evaluation/results/cmp_tracking/desktop/mosaic/desktop_mosaic_fast_motion/position_rpg_122.txt')
         pose_glo_t = pose_glo[:, 0]
         pose_glo_vec = R.from_quat(pose_glo[:, 4:8]).as_rotvec()
 
